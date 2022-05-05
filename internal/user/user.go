@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/retro-board/retro-service/internal/config"
+	"github.com/retro-board/company-service/internal/config"
 	"golang.org/x/oauth2"
 )
 
