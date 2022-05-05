@@ -27,10 +27,6 @@ func Build() (*Config, error) {
 		return nil, bugLog.Error(err)
 	}
 
-	if err := buildKeycloak(cfg); err != nil {
-		return nil, bugLog.Error(err)
-	}
-
 	if err := buildLocal(cfg); err != nil {
 		return nil, bugLog.Error(err)
 	}

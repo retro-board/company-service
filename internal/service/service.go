@@ -12,8 +12,8 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httplog"
+	"github.com/retro-board/company-service/internal/company"
 	"github.com/retro-board/company-service/internal/config"
-	"github.com/retro-board/company-service/internal/user"
 )
 
 type Service struct {
@@ -23,7 +23,7 @@ type Service struct {
 func (s *Service) Start() error {
 	bugLog.Local().Info("Starting Company")
 
-	logger := httplog.NewLogger("user-api", httplog.Options{
+	logger := httplog.NewLogger("company-api", httplog.Options{
 		JSON: true,
 	})
 
@@ -55,10 +55,9 @@ func (s *Service) Start() error {
 		r.Use(bugMiddleware.BugFixes)
 		r.Use(httplog.RequestLogger(logger))
 
-		r.Get("/login", user.NewUser(s.Config).LoginHandler)
-		r.Get("/callback", user.NewUser(s.Config).CallbackHandler)
-		r.Post("/verify", user.NewUser(s.Config).VerifyHandler)
-		r.Get("/permission", user.NewUser(s.Config).PermissionHandler)
+		r.Post("/create", company.NewCompany(s.Config).CreateHandler)
+		r.Get("/view", company.NewCompany(s.Config).ViewHandler)
+		r.Put("/update", company.NewCompany(s.Config).UpdateHandler)
 	})
 
 	r.Get("/health", healthcheck.HTTP)

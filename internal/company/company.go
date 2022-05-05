@@ -1,4 +1,4 @@
-package user
+package company
 
 import (
 	"context"
@@ -8,26 +8,24 @@ import (
 	"golang.org/x/oauth2"
 )
 
-type User struct {
+type Company struct {
 	Config      *config.Config
 	Verifier    *oidc.IDTokenVerifier
 	OAuthConfig *oauth2.Config
 	CTX         context.Context
 	State       string
 
-	UserAccount
+	CompanyAccount
 }
 
-type UserAccount struct {
-	ID         string   `json:"id"`
-	OriginalID string   `json:"-"`
-	Name       string   `json:"name"`
-	Role       string   `json:"role"`
-	Perms      []string `json:"perms"`
+type CompanyAccount struct {
+	ID         string `json:"id"`
+	OriginalID string `json:"-"`
+	Name       string `json:"name"`
 
 	jwt.RegisteredClaims
 }
 
-func NewUser(config *config.Config) *User {
-	return &User{}
+func NewCompany(config *config.Config) *Company {
+	return &Company{}
 }

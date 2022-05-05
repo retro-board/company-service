@@ -6,12 +6,6 @@ import (
 	"github.com/caarlos0/env/v6"
 )
 
-type KeycloakRoles struct {
-	CompanyOwner string `env:"OWNER_ROLE" envDefault:"company-owner"`
-	SprintLeader string `env:"LEADER_ROLE" envDefault:"sprint-leader"`
-	SprintUser   string `env:"USER_ROLE" envDefault:"sprint-user"`
-}
-
 type Keycloak struct {
 	ClientID     string
 	ClientSecret string
@@ -23,8 +17,6 @@ type Keycloak struct {
 	Hostname           string `env:"KEYCLOAK_ADDRESS" envDefault:"https://keycloak.chewedfeed.com"`
 	RealmName          string `env:"KEYCLOAK_REALM" envDefault:"retro-board"`
 	CallbackDomainPath string `env:"KEYCLOAK_CALLBACK_DOMAIN_PATH" envDefault:"https://backend.retro-board.it/account/callback"`
-
-	KeycloakRoles
 }
 
 func buildKeycloak(c *Config) error {

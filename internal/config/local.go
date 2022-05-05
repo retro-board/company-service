@@ -33,7 +33,7 @@ func buildLocal(cfg *Config) error {
 			cfg.Local.JWTSecret = secret.Value
 		}
 
-		if secret.Key == "user-token" {
+		if secret.Key == "company-token" {
 			cfg.Local.TokenSeed = secret.Value
 		}
 	}

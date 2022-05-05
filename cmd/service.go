@@ -10,10 +10,11 @@ import (
 var (
 	BuildVersion = "dev"
 	BuildHash    = "unknown"
+	ServiceName  = "base-service"
 )
 
 func main() {
-	bugLog.Local().Info("Starting Service")
+	bugLog.Local().Info(fmt.Sprintf("Starting %s", ServiceName))
 	bugLog.Local().Info(fmt.Sprintf("Version: %s, Hash: %s", BuildVersion, BuildHash))
 
 	cfg, err := config.Build()
