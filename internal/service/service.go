@@ -21,7 +21,7 @@ type Service struct {
 }
 
 func (s *Service) Start() error {
-	bugLog.Local().Info("Starting User")
+	bugLog.Local().Info("Starting Company")
 
 	logger := httplog.NewLogger("user-api", httplog.Options{
 		JSON: true,
