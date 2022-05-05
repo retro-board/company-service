@@ -13,6 +13,7 @@ metadata:
   namespace: retro-board
   labels:
     name: company-service
+    app: company-service
 spec:
   replicas: 2
   strategy:
@@ -25,6 +26,7 @@ spec:
     metadata:
       labels:
         app: company-service
+        name: company-service
     spec:
       serviceAccountName: retro-board-company-service
       imagePullSecrets:
@@ -63,10 +65,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-service
+  name: company-service
   namespace: retro-board
   labels:
     app: company-service
+    name: company-service
 spec:
   ports:
     - port: 3000
