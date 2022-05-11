@@ -23,7 +23,7 @@ type Service struct {
 func (s *Service) Start() error {
 	bugLog.Local().Info("Starting Company")
 
-	logger := httplog.NewLogger("company-api", httplog.Options{
+	logger := httplog.NewLogger("company-service", httplog.Options{
 		JSON: true,
 	})
 
@@ -58,6 +58,7 @@ func (s *Service) Start() error {
 		r.Post("/create", company.NewCompany(s.Config).CreateHandler)
 		r.Get("/view", company.NewCompany(s.Config).ViewHandler)
 		r.Put("/update", company.NewCompany(s.Config).UpdateHandler)
+		r.Get("/exists", company.NewCompany(s.Config).ExistsHandler)
 	})
 
 	r.Get("/health", healthcheck.HTTP)
