@@ -29,29 +29,44 @@ func (c Company) UpdateHandler(w http.ResponseWriter, r *http.Request) {
 func (c Company) ExistsHandler(w http.ResponseWriter, r *http.Request) {
 	var exists bool
 
-	companyName := r.Header.Get("Company-Name")
-	if companyName == "" {
-		http.Error(w, "Company-Name header is required", http.StatusBadRequest)
+	type respValue struct {
+		Exists    bool   `json:"exists"`
+		Domain    string `json:"domain"`
+		SubDomain string `json:"subdomain"`
+		Name      string `json:"name"`
+	}
+
+	domain := r.Header.Get("domain")
+	if domain == "" {
+		http.Error(w, "domain header is required", http.StatusBadRequest)
 		return
 	}
 
-	exists, err := c.checkCompanyExists(companyName)
+	err := c.companyParts(domain)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	exists, err = c.checkCompanyExists(domain)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if exists {
-		jsonResponse(w, http.StatusOK, struct {
-			Exists bool `json:"exists"`
-		}{
-			Exists: exists,
+		jsonResponse(w, http.StatusOK, &respValue{
+			Exists:    true,
+			Domain:    c.CompanyAccount.Domain,
+			SubDomain: c.CompanyAccount.Subdomain,
+			Name:      c.CompanyAccount.Name,
 		})
 	} else {
-		jsonResponse(w, http.StatusNotFound, struct {
-			Exists bool `json:"exists"`
-		}{
-			Exists: exists,
+		jsonResponse(w, http.StatusNotFound, &respValue{
+			Exists:    false,
+			Domain:    c.CompanyAccount.Domain,
+			SubDomain: c.CompanyAccount.Subdomain,
+			Name:      c.CompanyAccount.Name,
 		})
 	}
 	return

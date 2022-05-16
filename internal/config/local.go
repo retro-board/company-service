@@ -5,12 +5,38 @@ import (
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 )
 
-type APIKeys struct {
-	UserService    string `env:"USER_API_KEY"`
-	CompanyService string `env:"COMPANY_API_KEY"`
-	RetroService   string `env:"RETRO_API_KEY"`
-	TimerService   string `env:"TIMER_API_KEY"`
-	BillingService string `env:"BILLING_API_KEY"`
+type UserService struct {
+	Key     string `env:"USER_SERVICE_KEY"`
+	Address string `env:"USER_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/user"`
+}
+type CompanyService struct {
+	Key     string `env:"COMPANY_SERVICE_KEY"`
+	Address string `env:"COMPANY_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/company"`
+}
+type TimerService struct {
+	Key     string `env:"TIMER_SERVICE_KEY"`
+	Address string `env:"TIMER_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/key"`
+}
+type RetroService struct {
+	Key     string `env:"RETRO_SERVICE_KEY"`
+	Address string `env:"RETRO_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/retro"`
+}
+type BillingService struct {
+	Key     string `env:"BILLING_SERVICE_KEY"`
+	Address string `env:"BILLING_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/billing"`
+}
+type KeyService struct {
+	Key     string `env:"KEY_SERVICE_KEY"`
+	Address string `env:"KEY_SERVICE_ADDRESS" envDefault:"https://api.retro-board.it/v1/key"`
+}
+
+type Services struct {
+	UserService
+	CompanyService
+	TimerService
+	RetroService
+	BillingService
+	KeyService
 }
 
 type Local struct {
@@ -23,7 +49,7 @@ type Local struct {
 	JWTSecret     string `env:"JWT_SECRET" envDefault:"retro-board"`
 	TokenSeed     string `env:"TOKEN_SEED" envDefault:"retro-board"`
 
-	APIKeys
+	Services
 }
 
 func buildLocal(cfg *Config) error {
@@ -85,19 +111,22 @@ func buildServiceKeys(cfg *Config) error {
 	for _, secret := range secrets {
 		switch secret.Key {
 		case "retro":
-			cfg.Local.APIKeys.RetroService = secret.Value
+			cfg.Local.Services.RetroService.Key = secret.Value
 			break
 		case "user":
-			cfg.Local.APIKeys.UserService = secret.Value
+			cfg.Local.Services.UserService.Key = secret.Value
 			break
 		case "company":
-			cfg.Local.APIKeys.CompanyService = secret.Value
+			cfg.Local.Services.CompanyService.Key = secret.Value
+			break
+		case "timer":
+			cfg.Local.Services.TimerService.Key = secret.Value
 			break
 		case "billing":
-			cfg.Local.APIKeys.BillingService = secret.Value
+			cfg.Local.Services.BillingService.Key = secret.Value
 			break
-		case "timing":
-			cfg.Local.APIKeys.TimerService = secret.Value
+		case "key":
+			cfg.Local.Services.KeyService.Key = secret.Value
 			break
 		}
 	}
