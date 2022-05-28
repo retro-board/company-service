@@ -2,6 +2,9 @@ package config
 
 import (
 	"fmt"
+
+	"github.com/caarlos0/env/v6"
+
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 )
 
@@ -53,6 +56,12 @@ type Local struct {
 }
 
 func buildLocal(cfg *Config) error {
+	local := &Local{}
+	if err := env.Parse(local); err != nil {
+		return err
+	}
+	cfg.Local = *local
+
 	if err := buildLocalKeys(cfg); err != nil {
 		return bugLog.Errorf("failed to build local keys: %s", err.Error())
 	}
@@ -83,16 +92,15 @@ func buildLocalKeys(cfg *Config) error {
 		switch secret.Key {
 		case "jwt-secret":
 			cfg.Local.JWTSecret = secret.Value
-			break
 		case "company-token":
 			cfg.Local.TokenSeed = secret.Value
-			break
 		}
 	}
 
 	return nil
 }
 
+// nolint: gocyclo
 func buildServiceKeys(cfg *Config) error {
 	vaultSecrets, err := cfg.getVaultSecrets("kv/data/retro-board/api-keys")
 	if err != nil {
@@ -112,22 +120,16 @@ func buildServiceKeys(cfg *Config) error {
 		switch secret.Key {
 		case "retro":
 			cfg.Local.Services.RetroService.Key = secret.Value
-			break
 		case "user":
 			cfg.Local.Services.UserService.Key = secret.Value
-			break
 		case "company":
 			cfg.Local.Services.CompanyService.Key = secret.Value
-			break
 		case "timer":
 			cfg.Local.Services.TimerService.Key = secret.Value
-			break
 		case "billing":
 			cfg.Local.Services.BillingService.Key = secret.Value
-			break
 		case "key":
 			cfg.Local.Services.KeyService.Key = secret.Value
-			break
 		}
 	}
 

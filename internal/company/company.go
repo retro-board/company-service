@@ -3,12 +3,13 @@ package company
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"strings"
+
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 	"github.com/retro-board/company-service/internal/config"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-	"net/http"
-	"strings"
 )
 
 type Company struct {

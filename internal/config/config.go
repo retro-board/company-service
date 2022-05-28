@@ -9,7 +9,6 @@ type Config struct {
 	Local
 	Database
 	Vault
-	Keycloak
 }
 
 func Build() (*Config, error) {

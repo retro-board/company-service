@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 	"github.com/retro-board/company-service/internal/config"
 	"github.com/retro-board/company-service/internal/service"

@@ -2,6 +2,7 @@ package company
 
 import (
 	"fmt"
+
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 	"github.com/jackc/pgx/v4"
 )

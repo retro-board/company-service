@@ -2,8 +2,9 @@ package company
 
 import (
 	"encoding/json"
-	"github.com/go-chi/chi/v5"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func jsonResponse(w http.ResponseWriter, status int, data interface{}) {
@@ -86,5 +87,4 @@ func (c Company) ExistsHandler(w http.ResponseWriter, r *http.Request) {
 			Name:      c.CompanyAccount.Name,
 		})
 	}
-	return
 }
