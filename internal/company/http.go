@@ -2,6 +2,7 @@ package company
 
 import (
 	"encoding/json"
+	"github.com/go-chi/chi/v5"
 	"net/http"
 )
 
@@ -29,6 +30,22 @@ func (c Company) UpdateHandler(w http.ResponseWriter, r *http.Request) {
 func (c Company) ExistsHandler(w http.ResponseWriter, r *http.Request) {
 	var exists bool
 
+	key := r.Header.Get("X-Auth-Key")
+	if key == "" {
+		jsonResponse(w, http.StatusBadRequest, map[string]string{"error": "X-Auth-Key is required"})
+		return
+	}
+	userID := r.Header.Get("X-Auth-User")
+	if userID == "" {
+		jsonResponse(w, http.StatusBadRequest, map[string]string{"error": "X-Auth-User is required"})
+		return
+	}
+
+	if err := c.verifyKey(key, userID); err != nil {
+		jsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+
 	type respValue struct {
 		Exists    bool   `json:"exists"`
 		Domain    string `json:"domain"`
@@ -36,9 +53,9 @@ func (c Company) ExistsHandler(w http.ResponseWriter, r *http.Request) {
 		Name      string `json:"name"`
 	}
 
-	domain := r.Header.Get("domain")
+	domain := chi.URLParam(r, "domain")
 	if domain == "" {
-		http.Error(w, "domain header is required", http.StatusBadRequest)
+		http.Error(w, "domain is required", http.StatusBadRequest)
 		return
 	}
 

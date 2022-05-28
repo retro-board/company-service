@@ -33,7 +33,7 @@ spec:
         - name: regcred
       containers:
         - name: company-service
-          image: containers.home.develbox.info/retro-board/company-service:latest
+          image: containers.chewedfeed.com/retro-board/company-service:latest
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
