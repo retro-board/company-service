@@ -78,3 +78,11 @@ func ParseKVSecrets(data map[string]interface{}) ([]KVSecret, error) {
 
 	return secrets, nil
 }
+
+func KVStrings(kvs []KVSecret) map[string]string {
+	results := make(map[string]string)
+	for _, kv := range kvs {
+		results[kv.Key] = kv.Value
+	}
+	return results
+}

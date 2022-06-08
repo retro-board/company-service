@@ -78,3 +78,18 @@ func (c *Company) verifyKey(key, id string) error {
 
 	return nil
 }
+
+func (c *Company) CheckCompanyExists(domain string) (bool, error) {
+	m := NewMongo(c.Config)
+
+	dataSet, err := m.Get(domain)
+	if err != nil {
+		return false, err
+	}
+
+	return dataSet != nil, nil
+}
+
+func (c *Company) GetCompany(domain string) (*DataSet, error) {
+	return nil, nil
+}

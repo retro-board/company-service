@@ -66,7 +66,7 @@ func (c Company) ExistsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exists, err = c.checkCompanyExists(domain)
+	exists, err = c.CheckCompanyExists(domain)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

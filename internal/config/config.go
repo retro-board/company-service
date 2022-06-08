@@ -7,7 +7,7 @@ import (
 
 type Config struct {
 	Local
-	Database
+	Mongo
 	Vault
 }
 
@@ -18,11 +18,11 @@ func Build() (*Config, error) {
 		return nil, bugLog.Error(err)
 	}
 
-	if err := buildDatabase(cfg); err != nil {
+	if err := buildVault(cfg); err != nil {
 		return nil, bugLog.Error(err)
 	}
 
-	if err := buildVault(cfg); err != nil {
+	if err := BuildMongo(cfg); err != nil {
 		return nil, bugLog.Error(err)
 	}
 
