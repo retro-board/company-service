@@ -3,6 +3,7 @@ package company
 import (
 	"context"
 	"fmt"
+
 	bugLog "github.com/bugfixes/go-bugfixes/logs"
 	"github.com/mrz1836/go-sanitize"
 	"github.com/retro-board/company-service/internal/config"
