@@ -13,7 +13,7 @@ require (
 	github.com/keloran/go-probe v0.0.0-20210417224119-539dae99a65e
 	github.com/mrz1836/go-sanitize v1.1.5
 	go.mongodb.org/mongo-driver v1.11.0
-	golang.org/x/text v0.4.0
+	golang.org/x/text v0.5.0
 )
 
 require (
