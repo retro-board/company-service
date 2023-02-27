@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/vault/api v1.9.0
 	github.com/keloran/go-healthcheck v1.2.0
 	github.com/keloran/go-probe v1.0.0
-	github.com/mrz1836/go-sanitize v1.2.0
+	github.com/mrz1836/go-sanitize v1.2.1
 	go.mongodb.org/mongo-driver v1.11.2
 	golang.org/x/text v0.7.0
 )
